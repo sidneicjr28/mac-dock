@@ -113,3 +113,7 @@ Settings are stored in `config.json` in the dock's folder (created on first run)
 `bridge/protocols/plasma-window-management.xml` is from KDE's
 [plasma-wayland-protocols](https://invent.kde.org/libraries/plasma-wayland-protocols) (LGPL-2.1-or-later);
 `bridge/pwm_proto.py` is generated from it with the pywayland scanner.
+
+## License
+
+[MIT](LICENSE)
