@@ -31,6 +31,19 @@ QtObject {
     }
     readonly property int pinnedCount: items.filter(it => it.pinned).length
 
+    // A fresh launch, so views can play the launch bounce.
+    signal launched(string id)
+
+    // Launch the app, or focus/cycle/minimize its windows. `newInstance` always launches.
+    function activate(id, newInstance) {
+        const appWindows = tracker.windowsOf(id)
+        if (appWindows.length && !newInstance) return tracker.focusOrCycle(appWindows)
+        const entry = catalog.entryFor(id)
+        if (!entry) return console.warn("No desktop entry to launch for", id)
+        entry.execute()
+        if (!appWindows.length) launched(id)
+    }
+
     function isPinned(id) { return Array.from(config.pinned).includes(id) }
 
     function edit(mutate) {

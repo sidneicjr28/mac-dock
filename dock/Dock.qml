@@ -134,6 +134,7 @@ PanelWindow {
             item: dock.items[index] ?? ({ id: "", pinned: false, sep: true })
             catalog: dock.catalog
             tracker: dock.tracker
+            dockModel: dock.model
             size: dock.geo.sizes[index] ?? dock.iconSize
             slotX: dock.geo.xs[index] ?? 0
             restSize: dock.iconSize

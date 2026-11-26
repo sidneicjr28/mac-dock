@@ -7,6 +7,7 @@ Item {
     required property var item          // { id, pinned, sep } from DockModel
     required property var catalog
     required property var tracker
+    required property var dockModel
     property real size
     property real slotX
     property real restSize               // separator height
@@ -35,15 +36,12 @@ Item {
 
     // Left click: launch, or focus/cycle/minimize its windows. Middle click: always a new instance.
     function trigger(button) {
-        if (isSeparator) return
-        if (button === Qt.MiddleButton || !running) launch()
-        else tracker.focusOrCycle(windows)
+        if (!isSeparator) dockModel.activate(item.id, button === Qt.MiddleButton)
     }
 
-    function launch() {
-        if (!entry) return
-        entry.execute()
-        if (!running) bounceAnim.restart()
+    Connections {
+        target: root.dockModel
+        function onLaunched(id) { if (id === root.item.id && !root.running) bounceAnim.restart() }
     }
 
     Rectangle {
