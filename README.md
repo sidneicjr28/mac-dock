@@ -16,38 +16,80 @@ A macOS-style glass dock for **KDE Plasma 6 (Wayland)**, built with [Quickshell]
 
 ## Requirements
 
-- KDE Plasma 6 on Wayland
-- `quickshell`
-- `python-pywayland` (window list bridge)
-- `python-dbus`, `python-gobject` (global shortcuts)
-- KWin **Glass** effect (`Effect-blurplus` settings) for the blur
+| Requirement | Arch package | Used for |
+|---|---|---|
+| KDE Plasma 6 on Wayland | `plasma-meta` | Compositor (KWin), global shortcuts |
+| [Quickshell](https://quickshell.org) | `quickshell` | Runs the dock |
+| Python 3 + pywayland | `python-pywayland` | Window list bridge |
+| Python D-Bus + GObject | `python-dbus`, `python-gobject` | Super+1…9 shortcuts |
+| KWin [Glass](https://github.com/4v3ngR/kwin-effects-glass) effect | `kwin-effects-glass-git` (AUR) | Background blur (optional) |
 
-## Run
+## Installation
 
-```sh
-qs -p /path/to/mac-dock
-```
+### Easy install (recommended)
 
-Autostart: add `~/.config/autostart/mac-dock.desktop` with `Exec=qs -p /path/to/mac-dock`.
-
-Open settings by right-clicking the dock, left-clicking an empty part of the bar, or:
+Open **Konsole** (search "Konsole" in the app menu), paste this line and press Enter:
 
 ```sh
-qs -p /path/to/mac-dock ipc call dock settings
+curl -fsSL https://raw.githubusercontent.com/sidneicjr28/mac-dock/main/install.sh | bash
 ```
 
-Settings are stored in `config.json` (created on first run).
+The installer:
 
-## Glass blur setup
+1. Installs the required packages (asks for your password)
+2. Downloads Mac Dock to `~/.local/share/mac-dock`
+3. Offers to install and enable the Glass blur effect (optional, takes a few minutes)
+4. Makes the dock start automatically when you log in
+5. Starts the dock
 
-The dock window is excluded from Glass's force-blur and a separate, bar-sized window carries the blur:
+Run the same line again later to **update**. Automatic package install works on Arch-based
+systems (Arch, EndeavourOS, CachyOS, Manjaro). On other distros, install the
+[requirements](#requirements) with your package manager first; the installer then does the rest.
+
+Afterwards you may want to remove or auto-hide the Plasma panel (right-click it → *Show Panel Configuration*).
+
+The dock takes over **Super+1…9** from Plasma's task manager. Rebind them under
+*System Settings → Shortcuts → Mac Dock*.
+
+### Uninstall
 
 ```sh
-kwriteconfig6 --file kwinrc --group Effect-blurplus --key WindowClasses quickshell
-qdbus6 org.kde.KWin /Effects org.kde.kwin.Effects.reconfigureEffect glass
+bash ~/.local/share/mac-dock/install.sh --uninstall
 ```
 
-The dock keeps `DockCornerRadius` and `DockBlurStrength` in sync with its own settings.
+This stops the dock, removes it from autostart and gives Super+1…9 back to Plasma.
+
+### Manual install
+
+1. Install the [requirements](#requirements).
+2. Clone the repository and run the installer from inside it (it uses that folder in place):
+
+   ```sh
+   git clone https://github.com/sidneicjr28/mac-dock.git
+   cd mac-dock && ./install.sh
+   ```
+
+   Or skip the installer and run the dock directly with `qs -p /path/to/mac-dock`.
+
+3. Blur without the installer: turn on **Glass** (and turn off **Blur**) in *System Settings → Desktop Effects*, then:
+
+   ```sh
+   kwriteconfig6 --file kwinrc --group Effect-blurplus --key WindowClasses quickshell
+   qdbus6 org.kde.KWin /Effects org.kde.kwin.Effects.reconfigureEffect glass
+   ```
+
+   The dock window is excluded from Glass's force-blur; a separate bar-sized window carries the blur.
+   The dock keeps `DockCornerRadius` and `DockBlurStrength` in sync with its own settings.
+
+## Usage
+
+Open settings by right-clicking the dock, left-clicking an empty part of the bar, or (use your folder if you installed elsewhere):
+
+```sh
+qs -p ~/.local/share/mac-dock ipc call dock settings
+```
+
+Settings are stored in `config.json` in the dock's folder (created on first run).
 
 ## Architecture
 
@@ -63,6 +105,7 @@ The dock keeps `DockCornerRadius` and `DockBlurStrength` in sync with its own se
 | `services/KwinGlassSync.qml` | Mirrors radius/blur strength into kwinrc |
 | `dock/` | Dock view: layout, input, icons, rim, tooltip, menu; `Magnify.js` holds the pure layout math |
 | `settings/` | Settings window, one file per page plus reusable config-bound controls |
+| `install.sh` | Installer / updater / uninstaller |
 | `glass/shell.qml` | The bar-sized blur window (separate process) |
 | `bridge/shortcuts.py` | Registers Super+1…9 with KDE's KGlobalAccel (releasing Plasma's task-manager bindings) and reports presses |
 | `bridge/windows.py` | KWin `org_kde_plasma_window_management` → JSON bridge (KWin lacks wlr-foreign-toplevel) |
