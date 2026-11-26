@@ -2,6 +2,10 @@
 
 A macOS-style glass dock for **KDE Plasma 6 (Wayland)**, built with [Quickshell](https://quickshell.org).
 
+![Mac Dock on a KDE Plasma desktop](docs/screenshot.png)
+
+![Icon magnification on hover](docs/dock-hover.gif)
+
 - Gaussian icon magnification on hover, launch bounce, running-app dots
 - Drag to reorder pinned apps; drag up and release to unpin
 - Separators to group pinned apps; unpinned running apps appear after a divider
