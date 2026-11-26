@@ -7,6 +7,7 @@ A macOS-style glass dock for **KDE Plasma 6 (Wayland)**, built with [Quickshell]
 - Separators to group pinned apps; unpinned running apps appear after a divider
 - Real background blur through KWin's Glass effect, with a glass highlight rim
 - Per-screen auto-scaling for lower-resolution monitors
+- Super+1…9 open (or focus/cycle) the first nine apps on the dock
 - Right-click menu (pin/unpin, settings) and a settings window (size, magnification, colors, blur, apps)
 
 ## Requirements
@@ -14,6 +15,7 @@ A macOS-style glass dock for **KDE Plasma 6 (Wayland)**, built with [Quickshell]
 - KDE Plasma 6 on Wayland
 - `quickshell`
 - `python-pywayland` (window list bridge)
+- `python-dbus`, `python-gobject` (global shortcuts)
 - KWin **Glass** effect (`Effect-blurplus` settings) for the blur
 
 ## Run
@@ -58,6 +60,7 @@ The dock keeps `DockCornerRadius` and `DockBlurStrength` in sync with its own se
 | `dock/` | Dock view: layout, input, icons, rim, tooltip, menu; `Magnify.js` holds the pure layout math |
 | `settings/` | Settings window, one file per page plus reusable config-bound controls |
 | `glass/shell.qml` | The bar-sized blur window (separate process) |
+| `bridge/shortcuts.py` | Registers Super+1…9 with KDE's KGlobalAccel (releasing Plasma's task-manager bindings) and reports presses |
 | `bridge/windows.py` | KWin `org_kde_plasma_window_management` → JSON bridge (KWin lacks wlr-foreign-toplevel) |
 
 `bridge/protocols/plasma-window-management.xml` is from KDE's

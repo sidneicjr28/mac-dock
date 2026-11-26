@@ -29,11 +29,20 @@ ShellRoot {
         }
     }
 
+    // Super+1..9 open the first nine dock apps (registered with KDE's KGlobalAccel).
+    SupervisedProcess {
+        name: "shortcuts.py"
+        command: ["python3", Quickshell.shellPath("bridge/shortcuts.py")]
+        stdout: SplitParser { onRead: line => dockModel.activateSlot(parseInt(line)) }
+        onStderrLine: line => console.warn(line)
+    }
+
     SettingsWindow { id: settingsWindow; config: appConfig.values; model: dockModel; catalog: appCatalog }
 
     // `qs -p <dir> ipc call dock settings` (bindable to a keyboard shortcut)
     IpcHandler {
         target: "dock"
         function settings(): void { settingsWindow.open() }
+        function activate(slot: int): void { dockModel.activateSlot(slot) }
     }
 }

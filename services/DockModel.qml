@@ -44,6 +44,12 @@ QtObject {
         if (!appWindows.length) launched(id)
     }
 
+    // Super+N: the Nth app on the dock (1-based, separators skipped).
+    function activateSlot(n) {
+        const app = items.filter(it => !it.sep)[n - 1]
+        if (app) activate(app.id, false)
+    }
+
     function isPinned(id) { return Array.from(config.pinned).includes(id) }
 
     function edit(mutate) {
