@@ -1,0 +1,9 @@
+# Per-user settings, created on first run from services/Config.qml defaults
+config.json
+
+# Local logs and backups
+*.log
+.log
+.kwinrc.backup*
+
+__pycache__/
