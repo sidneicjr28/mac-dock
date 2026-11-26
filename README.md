@@ -1,5 +1,11 @@
 # Mac Dock
 
+[![Release](https://img.shields.io/github/v/release/sidneicjr28/mac-dock)](https://github.com/sidneicjr28/mac-dock/releases)
+[![License: MIT](https://img.shields.io/github/license/sidneicjr28/mac-dock)](LICENSE)
+![KDE Plasma 6](https://img.shields.io/badge/KDE_Plasma-6-1d99f3?logo=kde&logoColor=white)
+![Wayland](https://img.shields.io/badge/Wayland-supported-ffbc00?logo=wayland&logoColor=white)
+[![Built with Quickshell](https://img.shields.io/badge/built_with-Quickshell-8a2be2)](https://quickshell.org)
+
 A macOS-style glass dock for **KDE Plasma 6 (Wayland)**, built with [Quickshell](https://quickshell.org).
 
 ![Mac Dock on a KDE Plasma desktop](docs/screenshot.png)
