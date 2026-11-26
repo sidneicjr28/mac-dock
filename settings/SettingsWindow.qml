@@ -36,14 +36,14 @@ FloatingWindow {
             TabButton { text: "About" }
         }
 
-        StackLayout {
+        // Not a StackLayout: it skips resizing hidden pages, so they keep a stale width.
+        Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            currentIndex: tabs.currentIndex
 
-            AppearancePage { config: win.config }
-            AppsPage { config: win.config; model: win.model; catalog: win.catalog }
-            AboutPage {}
+            AppearancePage { anchors.fill: parent; visible: tabs.currentIndex === 0; config: win.config }
+            AppsPage { anchors.fill: parent; visible: tabs.currentIndex === 1; config: win.config; model: win.model; catalog: win.catalog }
+            AboutPage { anchors.fill: parent; visible: tabs.currentIndex === 2 }
         }
 
         RowLayout {
