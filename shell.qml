@@ -25,7 +25,7 @@ ShellRoot {
             model: dockModel
             catalog: appCatalog
             tracker: windowTracker
-            onOpenSettings: settingsWindow.open()
+            onOpenSettings: settings.open()
         }
     }
 
@@ -37,12 +37,24 @@ ShellRoot {
         onStderrLine: line => console.warn(line)
     }
 
-    SettingsWindow { id: settingsWindow; config: appConfig.values; model: dockModel; catalog: appCatalog }
+    // Built on first open: the settings UI (Controls, app list, icons) is rarely used.
+    LazyLoader {
+        id: settings
+        function open() { active = true; item.open() }
+        SettingsWindow { config: appConfig.values; model: dockModel; catalog: appCatalog }
+    }
+    // Unload once closed. Deferred: open() toggles visible off and on synchronously.
+    Connections {
+        target: settings.item
+        function onVisibleChanged() {
+            Qt.callLater(() => { if (settings.item && !settings.item.visible) settings.active = false })
+        }
+    }
 
     // `qs -p <dir> ipc call dock settings` (bindable to a keyboard shortcut)
     IpcHandler {
         target: "dock"
-        function settings(): void { settingsWindow.open() }
+        function settings(): void { settings.open() }
         function activate(slot: int): void { dockModel.activateSlot(slot) }
     }
 }
