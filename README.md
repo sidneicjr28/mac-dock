@@ -62,6 +62,16 @@ Afterwards you may want to remove or auto-hide the Plasma panel (right-click it 
 The dock takes over **Super+1…9** from Plasma's task manager. Rebind them under
 *System Settings → Shortcuts → Mac Dock*.
 
+### Arch User Repository (AUR)
+
+```sh
+yay -S mac-dock-git    # or: paru -S mac-dock-git
+```
+
+The dock starts on your next Plasma login, or right away with `mac-dock -d`.
+Optional Glass blur: see the message shown after install. Don't combine this with the installer above:
+both add an autostart entry, so you'd get two docks.
+
 ### Uninstall
 
 ```sh
