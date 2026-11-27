@@ -3,7 +3,7 @@ import Quickshell.Io
 import QtQuick
 import "Defaults.js" as Defaults
 
-// User settings persisted to config.json (created with Defaults.js values on first run).
+// User settings persisted to ~/.config/mac-dock/config.json (created with Defaults.js values on first run).
 Scope {
     readonly property alias values: adapter
 
@@ -16,7 +16,8 @@ Scope {
 
     FileView {
         id: file
-        path: Quickshell.shellPath("config.json")
+        // Outside the dock's folder, which is read-only when installed as a system package.
+        path: (Quickshell.env("XDG_CONFIG_HOME") || Quickshell.env("HOME") + "/.config") + "/mac-dock/config.json"
         watchChanges: true
         onFileChanged: reload()
         onAdapterUpdated: writeAdapter()

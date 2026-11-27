@@ -7,6 +7,7 @@ set -euo pipefail
 REPO_URL="https://github.com/sidneicjr28/mac-dock.git"
 INSTALL_DIR="${MAC_DOCK_DIR:-$HOME/.local/share/mac-dock}"
 AUTOSTART="$HOME/.config/autostart/mac-dock.desktop"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/mac-dock"
 PACKAGES=(quickshell python-pywayland python-dbus python-gobject git)
 GLASS_AUR="kwin-effects-glass-git"
 
@@ -58,6 +59,15 @@ fetch_dock() {
         git clone --quiet "$REPO_URL" "$INSTALL_DIR"
         info "Installed to $INSTALL_DIR"
     fi
+}
+
+# Settings used to live in the dock's folder; carry them over to the config dir.
+migrate_config() {
+    local old="$INSTALL_DIR/config.json"
+    [[ -f $old && ! -e $CONFIG_DIR/config.json ]] || return 0
+    mkdir -p "$CONFIG_DIR"
+    mv "$old" "$CONFIG_DIR/config.json"
+    info "Moved your settings to $CONFIG_DIR"
 }
 
 # Without Glass the dock falls back to KWin's own Blur effect; the user's choice to enable it is kept.
@@ -131,8 +141,12 @@ uninstall() {
     rm -f "$AUTOSTART"
     restore_plasma_shortcuts
     info "Stopped the dock, removed autostart and gave Super+1…9 back to Plasma."
-    if [[ -z $LOCAL_COPY && -d $INSTALL_DIR ]] && ask "Delete $INSTALL_DIR (including your dock settings)?"; then
+    if [[ -z $LOCAL_COPY && -d $INSTALL_DIR ]] && ask "Delete $INSTALL_DIR?"; then
         rm -rf "$INSTALL_DIR"
+        info "Deleted."
+    fi
+    if [[ -d $CONFIG_DIR ]] && ask "Delete your dock settings ($CONFIG_DIR)?"; then
+        rm -rf "$CONFIG_DIR"
         info "Deleted."
     fi
     info "Installed packages were left in place."
@@ -149,6 +163,7 @@ main() {
     check_system
     install_packages
     fetch_dock
+    migrate_config
     setup_blur
     setup_autostart
     start_dock

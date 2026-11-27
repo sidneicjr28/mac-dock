@@ -102,7 +102,7 @@ Open settings by right-clicking the dock, left-clicking an empty part of the bar
 qs -p ~/.local/share/mac-dock ipc call dock settings
 ```
 
-Settings are stored in `config.json` in the dock's folder (created on first run).
+Settings are stored in `~/.config/mac-dock/config.json` (created on first run).
 
 ## Architecture
 
