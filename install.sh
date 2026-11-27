@@ -100,7 +100,7 @@ setup_autostart() {
 Type=Application
 Name=Mac Dock
 Comment=macOS-style dock
-Exec=qs -p $INSTALL_DIR
+Exec=qs -n -p $INSTALL_DIR
 Icon=user-desktop
 X-KDE-autostart-phase=2
 EOF
@@ -110,7 +110,7 @@ EOF
 start_dock() {
     bold "5/5  Starting Mac Dock"
     qs kill -p "$INSTALL_DIR" >/dev/null 2>&1 || true
-    qs -p "$INSTALL_DIR" -d >/dev/null 2>&1
+    qs -n -p "$INSTALL_DIR" -d >/dev/null 2>&1
     info "The dock is running."
 }
 

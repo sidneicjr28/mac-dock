@@ -80,7 +80,7 @@ This stops the dock, removes it from autostart and gives Super+1…9 back to Pla
    cd mac-dock && ./install.sh
    ```
 
-   Or skip the installer and run the dock directly with `qs -p /path/to/mac-dock`.
+   Or skip the installer and run the dock directly with `qs -n -p /path/to/mac-dock` (`-n` refuses to start a second copy).
 
 3. Blur: with no extra setup the dock uses KDE's built-in **Blur** effect, if it is on in
    *System Settings → Desktop Effects* (its strength is the global one set there).
