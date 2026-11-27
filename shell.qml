@@ -17,7 +17,11 @@ ShellRoot {
     KwinGlassSync { config: appConfig.values }
 
     Variants {
-        model: Quickshell.screens
+        // One screen if chosen and connected, otherwise all of them.
+        model: {
+            const chosen = Quickshell.screens.filter(s => s.name === appConfig.values.screen)
+            return chosen.length ? chosen : Quickshell.screens
+        }
         Dock {
             required property var modelData
             screen: modelData

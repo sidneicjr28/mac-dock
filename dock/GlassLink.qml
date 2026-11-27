@@ -6,7 +6,7 @@ import QtQuick
 // reconnecting while the glass process is (re)starting.
 Scope {
     id: root
-    // "<screen> <x> <width> <height> <bottom margin> <radius>"; width 0 hides the glass.
+    // Protocol: see glass/shell.qml.
     property string message
 
     onMessageChanged: send()

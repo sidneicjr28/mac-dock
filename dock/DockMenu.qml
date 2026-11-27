@@ -7,12 +7,15 @@ PopupWindow {
     id: menu
     property var actions: []
 
-    // Show centred horizontally on `centreX`, just above `aboveY` (parent-window coordinates).
-    function show(items, centreX, aboveY) {
+    // Show at (x, y) in parent-window coordinates, opening away from the dock's screen edge;
+    // the compositor slides it back on screen if needed.
+    function show(items, x, y, dockEdge) {
         actions = items
-        const w = anchor.window.width
-        anchor.rect.x = Math.round(Math.max(4, Math.min(w - implicitWidth - 4, centreX - implicitWidth / 2)))
-        anchor.rect.y = Math.round(aboveY - implicitHeight - 8)
+        const away = { bottom: Edges.Top, top: Edges.Bottom, left: Edges.Right, right: Edges.Left }[dockEdge]
+        anchor.edges = away
+        anchor.gravity = away
+        anchor.rect.x = Math.round(x)
+        anchor.rect.y = Math.round(y)
         visible = true
     }
 

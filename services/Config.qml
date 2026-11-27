@@ -32,6 +32,9 @@ Scope {
             property int blurStrength: 4
             property real rimOpacity: 1
             property bool showRunning: true
+            property string position: "bottom"   // bottom | left | right | top
+            property bool autoHide: false
+            property string screen: ""           // output name; empty = every screen
         }
     }
 }

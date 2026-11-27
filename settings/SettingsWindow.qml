@@ -48,7 +48,7 @@ FloatingWindow {
 
         RowLayout {
             Label {
-                text: "Tip: drag icons on the dock to reorder; drag up and release to unpin. Right-click for options."
+                text: "Tip: drag icons on the dock to reorder; drag one off the dock and release to unpin. Right-click for options."
                 opacity: 0.6
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true

@@ -1,3 +1,4 @@
+import Quickshell
 import QtQuick
 import QtQuick.Controls.Fusion
 import QtQuick.Layouts
@@ -31,5 +32,22 @@ ScrollView {
 
         SectionTitle { text: "Behavior" }
         SwitchSetting { config: page.config; key: "showRunning"; label: "Show running apps" }
+        SwitchSetting { config: page.config; key: "autoHide"; label: "Auto-hide"; hint: "point at the screen edge to show" }
+
+        SectionTitle { text: "Placement" }
+        ChoiceSetting {
+            config: page.config; key: "position"; label: "Position on screen"
+            options: [
+                { text: "Bottom", value: "bottom" },
+                { text: "Left", value: "left" },
+                { text: "Right", value: "right" },
+                { text: "Top", value: "top" }
+            ]
+        }
+        ChoiceSetting {
+            config: page.config; key: "screen"; label: "Show on"
+            options: [{ text: "All screens", value: "" }].concat(Quickshell.screens.map(s => ({
+                text: s.model ? `${s.name} — ${s.model}` : s.name, value: s.name })))
+        }
     }
 }

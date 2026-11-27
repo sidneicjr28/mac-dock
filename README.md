@@ -16,12 +16,14 @@ A macOS-style glass dock for **KDE Plasma 6 (Wayland)**, built with [Quickshell]
 ![Icon magnification on hover](docs/dock-hover.gif)
 
 - Gaussian icon magnification on hover, launch bounce, running-app dots
-- Drag to reorder pinned apps; drag up and release to unpin
+- Bottom, left, right or top of the screen; optional auto-hide
+- On every monitor or just one
+- Drag to reorder pinned apps; drag away from the dock and release to unpin
 - Separators to group pinned apps; unpinned running apps appear after a divider
 - Real background blur through KWin's Glass effect, with a glass highlight rim
 - Per-screen auto-scaling for lower-resolution monitors
 - Super+1…9 open (or focus/cycle) the first nine apps on the dock
-- Right-click menu (pin/unpin, settings) and a settings window (size, magnification, colors, blur, apps)
+- Right-click menu (pin/unpin, settings) and a settings window (size, magnification, colors, blur, placement, apps)
 
 ## Requirements
 

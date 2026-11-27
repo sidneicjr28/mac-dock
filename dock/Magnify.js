@@ -1,6 +1,7 @@
 .pragma library
 
 // Dock geometry with Gaussian magnification. Pure functions: no QML state.
+// "x"/"width" here are along the dock's screen edge (vertical for a left/right dock).
 //
 // Sizes come from the cursor's distance to each slot's *rest* centre (unmagnified layout),
 // so magnification never feeds back into itself.
@@ -64,10 +65,10 @@ function dropSlot(geo, pinnedCount, from, x) {
     return slot
 }
 
-// Uniform scale so the dock fits the screen and suits its resolution.
-function scaleFor(screenW, screenH, needWidth, edgeGap, autoScale) {
+// Uniform scale so the dock fits its screen edge (`edgeLength` long) and suits the resolution.
+function scaleFor(screenW, screenH, edgeLength, needLength, edgeGap, autoScale) {
     const byResolution = autoScale
         ? Math.max(0.55, Math.min(1.5, Math.min(screenW / 1920, screenH / 1080))) : 1
-    const toFit = needWidth > 0 ? (screenW - 2 * edgeGap) / needWidth : 1
+    const toFit = needLength > 0 ? (edgeLength - 2 * edgeGap) / needLength : 1
     return Math.min(byResolution, toFit)
 }
