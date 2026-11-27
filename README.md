@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/logo.png" alt="Mac Dock logo" width="160"></p>
+
 # Mac Dock
 
 [![Release](https://img.shields.io/github/v/release/sidneicjr28/mac-dock)](https://github.com/sidneicjr28/mac-dock/releases)
