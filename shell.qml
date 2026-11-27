@@ -45,7 +45,10 @@ ShellRoot {
     LazyLoader {
         id: settings
         function open() { active = true; item.open() }
-        SettingsWindow { config: appConfig.values; model: dockModel; catalog: appCatalog }
+        SettingsWindow {
+            config: appConfig.values; model: dockModel; catalog: appCatalog
+            onRestoreDefaults: appConfig.restoreDefaults()
+        }
     }
     // Unload once closed. Deferred: open() toggles visible off and on synchronously.
     Connections {

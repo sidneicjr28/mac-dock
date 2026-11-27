@@ -8,6 +8,7 @@ FloatingWindow {
     required property var config     // Config.values
     required property var model      // DockModel
     required property var catalog    // AppCatalog
+    signal restoreDefaults()
 
     visible: false
     title: "Dock Settings"
@@ -53,7 +54,18 @@ FloatingWindow {
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
             }
+            Button { text: "Restore Defaults"; onClicked: confirmReset.open() }
             Button { text: "Close"; onClicked: win.visible = false }
         }
+    }
+
+    Dialog {
+        id: confirmReset
+        title: "Restore defaults?"
+        anchors.centerIn: parent
+        modal: true
+        standardButtons: Dialog.RestoreDefaults | Dialog.Cancel
+        Label { text: "All settings go back to their defaults.\nYour pinned apps are kept." }
+        onReset: { win.restoreDefaults(); close() }
     }
 }
