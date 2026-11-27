@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Mac Dock
+Comment=macOS-style dock
+Exec=mac-dock
+Icon=mac-dock
+Categories=Utility;
+OnlyShowIn=KDE;
+X-KDE-autostart-phase=2
