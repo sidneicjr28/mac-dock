@@ -29,6 +29,12 @@ ScrollView {
         SectionTitle { text: "Glass blur" }
         SwitchSetting { config: page.config; key: "blur"; label: "Enabled" }
         SliderSetting { config: page.config; key: "blurStrength"; label: "Blur strength"; from: 1; to: 15; stepSize: 1; enabled: page.config.blur }
+        Label {
+            text: "Uses the Glass effect if installed, otherwise KDE's built-in Blur (Desktop Effects).\nBlur strength applies to Glass only."
+            opacity: 0.6
+            wrapMode: Text.WordWrap
+            Layout.fillWidth: true
+        }
 
         SectionTitle { text: "Behavior" }
         SwitchSetting { config: page.config; key: "showRunning"; label: "Show running apps" }

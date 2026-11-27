@@ -20,7 +20,7 @@ A macOS-style glass dock for **KDE Plasma 6 (Wayland)**, built with [Quickshell]
 - On every monitor or just one
 - Drag to reorder pinned apps; drag away from the dock and release to unpin
 - Separators to group pinned apps; unpinned running apps appear after a divider
-- Real background blur through KWin's Glass effect, with a glass highlight rim
+- Real background blur through KWin's Glass effect (or KDE's built-in Blur), with a glass highlight rim
 - Per-screen auto-scaling for lower-resolution monitors
 - Super+1…9 open (or focus/cycle) the first nine apps on the dock
 - Right-click menu (pin/unpin, settings) and a settings window (size, magnification, colors, blur, placement, apps)
@@ -33,7 +33,7 @@ A macOS-style glass dock for **KDE Plasma 6 (Wayland)**, built with [Quickshell]
 | [Quickshell](https://quickshell.org) | `quickshell` | Runs the dock |
 | Python 3 + pywayland | `python-pywayland` | Window list bridge |
 | Python D-Bus + GObject | `python-dbus`, `python-gobject` | Super+1…9 shortcuts |
-| KWin [Glass](https://github.com/4v3ngR/kwin-effects-glass) effect | `kwin-effects-glass-git` (AUR) | Background blur (optional) |
+| KWin [Glass](https://github.com/4v3ngR/kwin-effects-glass) effect | `kwin-effects-glass-git` (AUR) | Background blur (optional; otherwise KDE's built-in Blur is used) |
 
 ## Installation
 
@@ -82,7 +82,9 @@ This stops the dock, removes it from autostart and gives Super+1…9 back to Pla
 
    Or skip the installer and run the dock directly with `qs -p /path/to/mac-dock`.
 
-3. Blur without the installer: turn on **Glass** (and turn off **Blur**) in *System Settings → Desktop Effects*, then:
+3. Blur: with no extra setup the dock uses KDE's built-in **Blur** effect, if it is on in
+   *System Settings → Desktop Effects* (its strength is the global one set there).
+   For the Glass effect without the installer, turn on **Glass** (and turn off **Blur**) in *System Settings → Desktop Effects*, then:
 
    ```sh
    kwriteconfig6 --file kwinrc --group Effect-blurplus --key WindowClasses quickshell

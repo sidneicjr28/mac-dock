@@ -60,6 +60,15 @@ fetch_dock() {
     fi
 }
 
+# Without Glass the dock falls back to KWin's own Blur effect; the user's choice to enable it is kept.
+native_blur_note() {
+    if [[ $(kreadconfig6 --file kwinrc --group Plugins --key blurEnabled --default true) == true ]]; then
+        info "Using KDE's built-in Blur effect instead."
+    else
+        info "For a blurred dock, turn on Blur in System Settings → Desktop Effects."
+    fi
+}
+
 setup_blur() {
     bold "3/5  Glass blur (optional)"
     if [[ ! -e /usr/lib/qt6/plugins/kwin/effects/plugins/glass.so ]]; then
@@ -67,10 +76,10 @@ setup_blur() {
         for h in yay paru; do command -v "$h" >/dev/null && aur="$h" && break; done
         if [[ -z $aur ]]; then
             info "Skipped: the Glass effect is not installed and no AUR helper (yay/paru) was found."
-            info "The dock works without it, just without the blurred background."
+            native_blur_note
             return
         fi
-        ask "Install the Glass blur effect ($GLASS_AUR, takes a few minutes)?" || { info "Skipped."; return; }
+        ask "Install the Glass blur effect ($GLASS_AUR, takes a few minutes)?" || { info "Skipped."; native_blur_note; return; }
         "$aur" -S --needed --noconfirm "$GLASS_AUR"
     fi
     # Glass replaces KWin's own Blur; the dock's blur window carries the effect (see README).
